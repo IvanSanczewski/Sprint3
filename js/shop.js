@@ -75,23 +75,69 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
+    
+    let newProduct = {};
+    let i;
+
+    for (i = 0; i < products.length; i++) {
+        if (i == id - 1) {
+            newProduct = products[i]; // es necesario/bueno crear una variable que contenga el objeto para luego meterlo en el array o se puede meter directamente?
+            cartList.push(newProduct);
+            
+            // cartList.push(products[i]);            
+            // console.log(typeof(newProduct), newProduct, typeof(cartList), cartList, typeof(products), products);
+        }
+    }
 }
+
 
 // Exercise 2
 function cleanCart() {
+    let i;
 
+    for (i = cartList.length; i > 0; i--){
+        cartList.pop();
+    }
+    // console.log(cartList.length);
 }
+
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    let i;
+
+    for (i= 0; i < cartList.length; i++){
+        // console.log(cartList[i].price);
+        total = total + cartList[i].price;
+        // console.log(total)
+    }
+    document.getElementById("mostrarPrecio").innerHTML = total;
 }
 
 // Exercise 4
-function generateCart() {
-    // Using the "cartlist" array that contains all the items in the shopping cart, 
+function generateCart(x) {
+    // Using the "cartl ist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-}
+    let i, j;
+
+    for (i = 0; i <= cartList.length; i++){
+        if (cart.length == 0){
+            cartList[i].quantity = 1;
+            cart.push(cartList[i]);  
+        } else {
+            for (j = 0; j <= cart.length; j++){
+                if ((cartList[i].id) == (cart[j].id)){
+                    cart[j].quantity ++;
+                } else {
+                    cartList.quantity = 1;
+                    cart.push(cartList[i]);
+                }
+            }
+        }
+    }
+}   
+
 
 // Exercise 5
 function applyPromotionsCart() {

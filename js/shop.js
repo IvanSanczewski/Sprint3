@@ -97,6 +97,7 @@ function buy(id) {
 // Exercise 2
 function cleanCart() {
     cartList = [];
+    cart = [];
     total = 0;
 }
 
@@ -112,8 +113,6 @@ function calculateTotal() {
     
     document.getElementById("mostrarPrecio").innerHTML = total;
     total = 0;
-
-    // generateCart(cartList);
 }
 
 
@@ -131,9 +130,9 @@ function generateCart(cartList) {
     for (i = ((cartList.length) - 1); i < cartList.length; i++) {
 
         if (cart.length === 0){
-            cartList[i].quantity = 1;
+            // cartList[i].quantity = 1;
             cart.push(cartList[i]);
-            // cart[0].quantity = 1; <= podríamos añadir parámetro y valor al objeto del segundo array
+            cart[0].quantity = 1; // podríamos añadir parámetro y valor al objeto del segundo array una vez hecho el push
 
         } else {
             
@@ -151,40 +150,30 @@ function generateCart(cartList) {
                 cartList[i].quantity = 1;
                 cart.push(cartList[i])
             }
-            console.log(cart)
+            // console.log(cart)
         }
     }
-
-    
-    // for (i = 1; i < cartList.length; i++) {
-        
-    //     for (k = 0; k < cartList.length; k++) {
-    //         if (cartList[i].id == cart[k].id) {
-                
-    //             isAlreadyInCart = true;
-    //             break;
-    //         } else {
-    //             isAlreadyInCart = false;
-    //         }
-    //     }
-
-
-
-    //     if (isAlreadyInCart){
-    //         cart[k].quantity++;
-    //     } else {
-    //         cartList[i].quantity = 1;
-    //         cart.push(cartList[i]);
-    //     }
-
-
-    // }    
-
+    applyPromotionsCart(cart);
 }
 
 // Exercise 5
-function applyPromotionsCart() {
+function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
+
+    for(let i = 0; i < cart.length; i++) {
+        if ((cart[i].id === 1 ) && (cart[i].quantity >= cart[i].offer['number'])) {
+            // cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
+            promotionApplied = calculatePromotion(cart, i);
+        } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
+            promotionApplied = calculatePromotion(cart, i);
+            // cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
+        }
+    }
+    
+}
+
+function calculatePromotion(cart, i) {
+    cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
 }
 
 // Exercise 6

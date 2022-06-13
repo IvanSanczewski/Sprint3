@@ -122,27 +122,37 @@ function generateCart(cartList) {
 // Using the "cartlist" array that contains all the items in the shopping cart, 
 // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
 
+    //inicializamos variables
     let i, k;
     let isAlreadyInCart;
 
-    for (i = 0; i < cartList.length; i++) {
+
+    // loop para el array original
+    for (i = ((cartList.length) - 1); i < cartList.length; i++) {
+
         if (cart.length === 0){
             cartList[i].quantity = 1;
             cart.push(cartList[i]);
-        } else {
-            for (k = 0; k < cart.length; k++) {
-                if (cartList[i].id === cart[k].id){
-                    // cart[k].quantity ++;
-                    isAlreadyInCart = true;
-                } else {
-                    isAlreadyInCart = false;
-                    // cartList[i].quantity = 1;
-                    // cart.push(cartList[i]);
-                }
-                console.log(cart)
-            }
-        }
+            // cart[0].quantity = 1; <= podríamos añadir parámetro y valor al objeto del segundo array
 
+        } else {
+            
+            isAlreadyInCart = false;
+            // loop al segundo array
+            for (k = 0; k < cart.length; k++) {
+                
+                if (cartList[i].id === cart[k].id){
+                    cart[k].quantity ++;
+                    isAlreadyInCart = true;
+                }
+            }
+
+            if (!isAlreadyInCart){
+                cartList[i].quantity = 1;
+                cart.push(cartList[i])
+            }
+            console.log(cart)
+        }
     }
 
     

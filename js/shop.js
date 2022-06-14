@@ -99,6 +99,8 @@ function cleanCart() {
     cartList = [];
     cart = [];
     total = 0;
+
+    document.getElementById("totalPrice").innerHTML = total;
 }
 
 
@@ -111,7 +113,7 @@ function calculateTotal() {
         total = total + cartList[i].price;
     }
     
-    document.getElementById("mostrarPrecio").innerHTML = total;
+    document.getElementById("totalPrice").innerHTML = total;
     total = 0;
 }
 
@@ -179,6 +181,64 @@ function calculatePromotion(cart, i) {
 // Exercise 6
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+    let productPrice;
+
+    for (let i = 0; i < cart.length; i++) {
+        // document.getElementById("firstProduct").innerHTML = cart[i].name;
+        // document.getElementById("firstProductPrice").innerHTML = cart[i].price;
+        // document.getElementById("firstProductQuantity").innerHTML = cart[i].quantity;
+        // productPrice = cart[i].price * cart[i].quantity;
+        // document.getElementById("firstProductTotal").innerHTML = productPrice;
+        
+        
+        productPrice = cart[i].price * cart[i].quantity;
+        const rowProduct = document.createElement(`tr${i}`);
+        const rowProductName = document.createElement(`th${i}`);
+        const rowProductPrice = document.createElement(`td${i}`);
+        const rowProductQuantity = document.createElement(`td${i}`);
+        const rowProductProductPrice = document.createElement(`td${i}`);
+
+        rowProductName.innerHTML = `${cart[i].name}`;
+        rowProductPrice.innerHTML = `$${cart[i].price}`;
+        rowProductQuantity.innerHTML = `${cart[i].quantity}`;
+        rowProductProductPrice.innerHTML = `$${cart[i].productPrice}`;
+
+        
+        // rowProduct.innerHTML = `<th id="${i}ProductName" scope="row">${cart[i].name}</th>`
+        
+    //    `<td id="${i}ProductPrice">$${cart[i].price}</td>
+    //     <td id="${i}ProductQuantity">${cart[i].quantity}</td>
+    //     <td id="${i}ProductTotal">$${productPrice}</td>
+    //     </br>`
+
+        const showCart = document.getElementById("cartList");
+        showCart.append(rowProduct);
+        
+        const showRowProduct = document.getElementById(`tr${i}`);
+        showRowProduct.append(rowProductName);
+        
+        const showRowProduct = document.getElementById(`tr${i}`);
+        showRowProduct.append(rowProductName);
+        
+        const showRowProduct = document.getElementById(`tr${i}`);
+        showRowProduct.append(rowProductName);
+        
+        const showRowProduct = document.getElementById(`tr${i}`);
+        showRowProduct.append(rowProductName);
+        // showCart.append(rowProduct);
+        // showCart.append(rowProduct);
+        // showCart.append(rowProduct);
+
+
+        // document.getElementById("cartList").innerHTML = `<tr id="${i}Product">`
+        // productPrice = cart[i].price * cart[i].quantity;
+        // document.getElementById("cartList").innerHTML = `<th id="${i}ProductName" scope="row">${cart[i].name}</th>
+        // <td id="${i}ProductPrice">$${cart[i].price}</td>
+        // <td id="${i}ProductQuantity">${cart[i].quantity}</td>
+        // <td id="${i}ProductTotal">$${productPrice}</td>`
+    }
+
+    calculateTotal();
 }
 
 

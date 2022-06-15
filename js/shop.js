@@ -199,7 +199,7 @@ function printCart(){
         console.log(productPrice);
 
         const rowProduct = document.createElement(`tr`);
-        rowProduct.setAttribute('class', 'domRow');
+        rowProduct.setAttribute('id', 'domRow');
         //asignar id o class par acceder desde cleanCart() y eliminar el nodo
 
         const rowProductName = document.createElement(`th`);

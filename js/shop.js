@@ -101,7 +101,9 @@ function cleanCart() {
     total = 0;
 
 
-    // const clearCartRows = document.getElementById("clearRow");
+    const clearCartRows = document.getElementById("clearRow");
+    clearCartRows.remove();
+
     // console.log(typeof clearCartRows);
     // console.log(clearCartRows);
     

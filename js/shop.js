@@ -2,7 +2,7 @@
 var products = [
    {
         id: 1,
-        name: 'cooking oil',
+        name: 'Cooking oil',
         price: 10.5,
         type: 'grocery',
         offer: {
@@ -100,14 +100,15 @@ function cleanCart() {
     cart = [];
     total = 0;
 
-
-    const clearCartRows = document.getElementById("clearRow");
-    clearCartRows.remove();
+    // const clearCartRows = document.getElementById("clearRow");
+    // clearCartRows.remove();
 
     // console.log(typeof clearCartRows);
     // console.log(clearCartRows);
-    
 
+
+
+    document.getElementById("cartList").innerHTML = "";
     document.getElementById("totalPrice").innerHTML = total;
 }
 
@@ -224,12 +225,57 @@ function printCart(){
         rowProduct.append(rowProductProductPrice);
 
         fragmentCart.append(rowProduct);
-
+        
     };
     calculateTotal();
     dinamicCart.append(fragmentCart);
 }
 
+
+function printCart() {
+    document.getElementById("cartList").innerHTML = "";
+    let productPrice;
+
+
+    // const dinamicCart = document.querySelector("#cartList");
+    // const fragmentCart = document.createDocumentFragment();
+
+    // const a = document.getElementById("cartList");
+    
+    
+    for (let i = 0; i < cart.length; i++) {
+        productPrice = cart[i].price * cart[i].quantity;
+
+
+
+        document.querySelector("#cartList").insertAdjacentHTML('afterbegin',`<tr class="tr"></tr>`);
+        document.querySelector(".tr").insertAdjacentHTML('afterbegin',`<th class="th">${cart[i].name}</th>`);
+        document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${cart[i].price}</td>`);
+        document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${cart[i].quantity}</td>`);
+        if (cart[i].id === 1 && cart[i].quantity >= cart[i].offer['number']) {
+            promotionApplied = calculatePromotion(cart, i);
+        } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
+            promotionApplied = calculatePromotion(cart, i);
+        } else {
+            document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${productPrice}</td>`);
+        }
+        
+        //promotion
+        
+        // document.getElementById("cartList").insertAdjacentElement('afterbegin','tr');
+        // document.querySelector("").insertAdjacentElement('afterbegin','tr');
+        
+        // const rowProduct = document.createElement(`tr`);
+        // const rowProductName = document.createElement(`th`);
+        // const rowProductPrice = document.createElement(`td`);
+        // const rowProductQuantity = document.createElement(`td`);
+        // const rowProductQuantityPrice = document.createElement(`td`);
+
+
+        // document.getElementById("cartList").insertAdjacentHTML('afterbegin','fragmentCart');        document.getElementById("cartList").insertAdjacentHTML('afterbegin','fragmentCart');
+
+    }
+}
 
 // ** Nivell II **
 

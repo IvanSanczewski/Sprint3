@@ -100,14 +100,6 @@ function cleanCart() {
     cart = [];
     total = 0;
 
-    // const clearCartRows = document.getElementById("clearRow");
-    // clearCartRows.remove();
-
-    // console.log(typeof clearCartRows);
-    // console.log(clearCartRows);
-
-
-
     document.getElementById("cartList").innerHTML = "";
     document.getElementById("totalPrice").innerHTML = total;
 }
@@ -117,14 +109,34 @@ function cleanCart() {
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     let i;
+    // for (i= 0; i < cartList.length; i++){
+        //     total += cartList[i].price;
+        // }
+        
+        
+    for (i= 0; i < cart.length; i++){
+        console.log(total);
+        console.log(i);
+        console.log(cart);
+        console.log(cart[i]);
+        console.log(cart[i].id);
+        console.log(cart[i].quantity);
+        console.log(cart[i].offer['number']);
+        
 
-    for (i= 0; i < cartList.length; i++){
-        // total = total + cartList[i].price;
-        total += cartList[i].price;
+
+        if (cart[i].id === 1 && cart[i].quantity >= cart[i].offer['number']) {
+            total += cart[i].subtotalWithDiscount;
+        } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
+            total += cart[i].subtotalWithDiscount;
+        } else {
+            total += cart[i].price;
+        }
+        // total += cart[i].subtotalWithDiscount;
     }
     
-    document.getElementById("totalPrice").innerHTML = total;
-    total = 0;
+    document.getElementById("totalPrice").innerHTML = total.toFixed(2);
+    // total = 0;
 
 }
 
@@ -174,107 +186,48 @@ function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
 
     for(let i = 0; i < cart.length; i++) {
-        if ((cart[i].id === 1 ) && (cart[i].quantity >= cart[i].offer['number'])) {
-            // cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
-            promotionApplied = calculatePromotion(cart, i);
+        if (cart[i].id === 1  && cart[i].quantity >= cart[i].offer['number']) {
+            // promotionApplied = calculatePromotion(cart, i);
+            return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
         } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
-            promotionApplied = calculatePromotion(cart, i);
-            // cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
+            // promotionApplied = calculatePromotion(cart, i);
+            return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
         }
     }
     
 }
 
-function calculatePromotion(cart, i) {
-    cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
-}
 
+//se puede eliminar gracias al return dentro de las condiciones de function applyPromotionsCart(cart)
+// function calculatePromotion(cart, i) {
+//     return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
+// }
 
-function printCart(){
-    let productPrice;
-    
-    const dinamicCart = document.getElementById("cartList");
-    const fragmentCart = document.createDocumentFragment();
-
-    // cart.forEach((product) =>{
-    for (let i = 0; i < cart.length; i++) {
-        productPrice = cart[i].price * cart[i].quantity;
-        console.log(productPrice);
-
-        const rowProduct = document.createElement(`tr`);
-        rowProduct.setAttribute('id', 'domRow');
-        //asignar id o class par acceder desde cleanCart() y eliminar el nodo
-
-        const rowProductName = document.createElement(`th`);
-        rowProductName.textContent = `${cart[i].name}`;
-        //es necesario agregar scope="row" ?????
-
-        const rowProductPrice = document.createElement(`td`);
-        rowProductPrice.textContent = `$${cart[i].price}`;
-        
-        const rowProductQuantity = document.createElement(`td`);
-        rowProductQuantity.textContent = `${cart[i].quantity}`;
-        console.log(rowProductQuantity);
-        
-        const rowProductProductPrice = document.createElement(`td`);
-        rowProductProductPrice.textContent = `$${productPrice}`;
-        
-        rowProduct.append(rowProductName);
-        rowProduct.append(rowProductPrice);
-        rowProduct.append(rowProductQuantity);
-        rowProduct.append(rowProductProductPrice);
-
-        fragmentCart.append(rowProduct);
-        
-    };
-    calculateTotal();
-    dinamicCart.append(fragmentCart);
-}
-
-
+// Exercise 6
 function printCart() {
     document.getElementById("cartList").innerHTML = "";
     let productPrice;
-
-
-    // const dinamicCart = document.querySelector("#cartList");
-    // const fragmentCart = document.createDocumentFragment();
-
-    // const a = document.getElementById("cartList");
-    
+    let promotionApplied;
     
     for (let i = 0; i < cart.length; i++) {
         productPrice = cart[i].price * cart[i].quantity;
-
-
-
+        
         document.querySelector("#cartList").insertAdjacentHTML('afterbegin',`<tr class="tr"></tr>`);
         document.querySelector(".tr").insertAdjacentHTML('afterbegin',`<th class="th">${cart[i].name}</th>`);
-        document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${cart[i].price}</td>`);
+        document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${cart[i].price}</td>`);
         document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${cart[i].quantity}</td>`);
+        
         if (cart[i].id === 1 && cart[i].quantity >= cart[i].offer['number']) {
-            promotionApplied = calculatePromotion(cart, i);
+            promotionApplied = applyPromotionsCart(cart).toFixed(2);
+            document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${promotionApplied}</td>`);
         } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
             promotionApplied = calculatePromotion(cart, i);
+            document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${promotionApplied}</td>`);
         } else {
-            document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${productPrice}</td>`);
+            document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${productPrice}</td>`);
         }
-        
-        //promotion
-        
-        // document.getElementById("cartList").insertAdjacentElement('afterbegin','tr');
-        // document.querySelector("").insertAdjacentElement('afterbegin','tr');
-        
-        // const rowProduct = document.createElement(`tr`);
-        // const rowProductName = document.createElement(`th`);
-        // const rowProductPrice = document.createElement(`td`);
-        // const rowProductQuantity = document.createElement(`td`);
-        // const rowProductQuantityPrice = document.createElement(`td`);
-
-
-        // document.getElementById("cartList").insertAdjacentHTML('afterbegin','fragmentCart');        document.getElementById("cartList").insertAdjacentHTML('afterbegin','fragmentCart');
-
     }
+    calculateTotal();
 }
 
 // ** Nivell II **

@@ -108,36 +108,20 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    let i;
-    // for (i= 0; i < cartList.length; i++){
-        //     total += cartList[i].price;
-        // }
-        
         
     for (i= 0; i < cart.length; i++){
-        console.log(total);
-        console.log(i);
-        console.log(cart);
-        console.log(cart[i]);
-        console.log(cart[i].id);
-        console.log(cart[i].quantity);
-        console.log(cart[i].offer['number']);
-        
-
-
+ 
         if (cart[i].id === 1 && cart[i].quantity >= cart[i].offer['number']) {
             total += cart[i].subtotalWithDiscount;
         } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
             total += cart[i].subtotalWithDiscount;
         } else {
-            total += cart[i].price;
+            total += cart[i].price * cart[i].quantity;
         }
-        // total += cart[i].subtotalWithDiscount;
     }
     
     document.getElementById("totalPrice").innerHTML = total.toFixed(2);
-    // total = 0;
-
+    total = 0;
 }
 
 
@@ -175,33 +159,32 @@ function generateCart(cartList) {
                 cartList[i].quantity = 1;
                 cart.push(cartList[i])
             }
-            // console.log(cart)
         }
     }
-    applyPromotionsCart(cart);
+    // applyPromotionsCart(cart); //debería pedirlo calculateTotal()
 }
 
 // Exercise 5
-function applyPromotionsCart(cart) {
-    // Apply promotions to each item in the array "cart"
+// function applyPromotionsCart(cart) {
+//     // Apply promotions to each item in the array "cart"
 
-    for(let i = 0; i < cart.length; i++) {
-        if (cart[i].id === 1  && cart[i].quantity >= cart[i].offer['number']) {
-            // promotionApplied = calculatePromotion(cart, i);
-            return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
-        } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
-            // promotionApplied = calculatePromotion(cart, i);
-            return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
-        }
-    }
+//     for(let i = 0; i < cart.length; i++) {
+//         if (cart[i].id === 1  && cart[i].quantity >= cart[i].offer['number']) {
+//             promotionApplied = calculatePromotion(cart, i);
+//             // return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
+//         } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
+//             promotionApplied = calculatePromotion(cart, i);
+//             // return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
+//         }
+//     }
     
-}
+// }
 
 
 //se puede eliminar gracias al return dentro de las condiciones de function applyPromotionsCart(cart)
-// function calculatePromotion(cart, i) {
-//     return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100).toFixed(2);
-// }
+function calculatePromotion(cart, i) {
+    return cart[i].subtotalWithDiscount = (cart[i].quantity * cart[i].price) * ((100 - cart[i].offer['percent'])/100);
+}
 
 // Exercise 6
 function printCart() {
@@ -218,10 +201,12 @@ function printCart() {
         document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${cart[i].quantity}</td>`);
         
         if (cart[i].id === 1 && cart[i].quantity >= cart[i].offer['number']) {
-            promotionApplied = applyPromotionsCart(cart).toFixed(2);
+            // promotionApplied = applyPromotionsCart(cart).toFixed(2);
+            promotionApplied = calculatePromotion(cart, i).toFixed(2);
             document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${promotionApplied}</td>`);
         } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
-            promotionApplied = calculatePromotion(cart, i);
+            // promotionApplied = applyPromotionsCart(cart).toFixed(2);
+            promotionApplied = calculatePromotion(cart, i).toFixed(2);
             document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${promotionApplied}</td>`);
         } else {
             document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${productPrice}</td>`);

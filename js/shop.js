@@ -72,25 +72,28 @@ var cart = [];
 
 var total = 0;
 
+//Controls de total ammount of product units in the cart and it's displayed in the rounded pill inside the cart button in the menu
+var countProducts = 0;   
+
 // Exercise 1
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
     
-    let newProduct = {};
-    let i;
+    // let newProduct = {};
+    // let i;
 
-    for (i = 0; i < products.length; i++) {
-        if (i == id - 1) {
-            newProduct = products[i]; // es necesario/bueno crear una variable que contenga el objeto para luego meterlo en el array o se puede meter directamente?
-            cartList.push(newProduct);
+    // for (i = 0; i < products.length; i++) {
+    //     if (i == id - 1) {
+    //         newProduct = products[i]; // es necesario/bueno crear una variable que contenga el objeto para luego meterlo en el array o se puede meter directamente?
+    //         cartList.push(newProduct);
             
-            // cartList.push(products[i]);            
-            // console.log(typeof(newProduct), newProduct, typeof(cartList), cartList, typeof(products), products);
-        }
-    }
-
-    generateCart(cartList);
+    //         // cartList.push(products[i]);            
+    //         // console.log(typeof(newProduct), newProduct, typeof(cartList), cartList, typeof(products), products);
+    //     }
+    // }
+    // generateCart(cartList);
+    addToCart(id)
 }
 
 
@@ -199,6 +202,7 @@ function printCart() {
         document.querySelector(".tr").insertAdjacentHTML('afterbegin',`<th class="th">${cart[i].name}</th>`);
         document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">$${cart[i].price}</td>`);
         document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${cart[i].quantity}</td>`);
+        document.querySelector(".tr").insertAdjacentHTML('beforeend',`<td class="td">${cart[i].quantity}</td>`);
         
         if (cart[i].id === 1 && cart[i].quantity >= cart[i].offer['number']) {
             // promotionApplied = applyPromotionsCart(cart).toFixed(2);
@@ -217,17 +221,79 @@ function printCart() {
 
 // ** Nivell II **
 
-// Exercise 7
+// Exercise 8
 function addToCart(id) {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    // 2. Add found product to the cart array or update its quantity in case it has been added previously
+    // let i = 0;
+    let isAlreadyInCart = false; 
+    
+    if (cart.length === 0) { //si cart esta vacío
+        isAlreadyInCart = false;
+
+    } else {
+        for (i = 0; i < cart.length; i++){ //comparar el id del objeto del array products con el id de los objetos que ya están en cart
+            if (id === cart[i].id) {
+                isAlreadyInCart = true;
+                break;
+            } else {
+                isAlreadyInCart = false;
+            }
+        }        
+    }    
+    if (isAlreadyInCart) {
+        cart[i].quantity++;
+    } else {
+        products[id-1].quantity = 1; //añadir propiedad quantity al objeto
+        cart.push(products[id-1]); //añadir objeto del array products al array al cart
+    }
+
+    for (let k = 0; k < cart.length; k++) {
+        countProducts += cart[k].quantity;
+        document.getElementById("countProducts").innerHTML = countProducts;
+    }
+    countProducts = 0;
+
+    // ********    
+
+    // if (cart.length === 0) { //si cart esta vacío
+    //     isAlreadyInCart = false;
+    
+    // } else {
+    //     cart.forEach(item => { //para cada item del cart
+    //         if (id == item.id) { //find: ya está el id
+    //             isAlreadyInCart = true;
+    //             break;
+    //         } else {
+    //             isAlreadyInCart = false;
+    //         }
+    //     })
+    // }
+    // if (isAlreadyInCart) {
+    //     cart[i].quantity++;
+    // } else {
+    //     products[id-1].quantity = 1; //añadir propiedad quantity al objeto
+    //     cart.push(products[id-1]); //añadir objeto del array products al array al cart
+    // }
 }
 
-// Exercise 8
+// Exercise 9
 function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
+    // 1. Loop for to the array products to get the item to delete to cart
+    // 2. Delete one unit of found product from the cart array
+
+    let alert;
+
+    for (let i = 0; i < cart.length; i++) {
+        if (id === cart[i].id && cart[i].quantity > 1) {
+            cart[i].quantity--;
+        } else if (id === cart[i].id && cart[i].quantity == 1 ) {
+            cart.splice(i, 1);
+        } else {
+            alert('No tenías este artículo en el carrito.');
+        }
+    }
 }
 
 function open_modal(){

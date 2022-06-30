@@ -105,6 +105,12 @@ function cleanCart() {
 
     document.getElementById("cartList").innerHTML = "";
     document.getElementById("totalPrice").innerHTML = total;
+
+    // la sentencia siguiente funciona, pero como ya hay una función que se encarga de calcular y mostrar el total de productos en el pill buton del menú, mejor llamar a dicha función
+    // document.getElementById("countProducts").innerHTML = countProducts; 
+    totalProducts();
+
+
 }
 
 
@@ -226,7 +232,10 @@ function addToCart(id) {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array or update its quantity in case it has been added previously
-    // let i = 0;
+    let i;
+
+
+    // let countProducts = 0; comentamos para que una función externa realice el recuento de productos y así modularizar
     let isAlreadyInCart = false; 
     
     if (cart.length === 0) { //si cart esta vacío
@@ -249,13 +258,18 @@ function addToCart(id) {
         cart.push(products[id-1]); //añadir objeto del array products al array al cart
     }
 
-    for (let k = 0; k < cart.length; k++) {
-        countProducts += cart[k].quantity;
-        document.getElementById("countProducts").innerHTML = countProducts;
-    }
-    countProducts = 0;
-
     // ********    
+    // sacamos el contador total de productos a una función externa y la llamamos cada vez que se hace click en añadir o eliminar
+    totalProducts();
+    // for (let k = 0; k < cart.length; k++) {
+    //     countProducts += cart[k].quantity;
+    //     document.getElementById("countProducts").innerHTML = countProducts;
+    // }
+    // countProducts = 0;
+
+    // ********     
+    // hacer el ciclo mediante un forEach()
+
 
     // if (cart.length === 0) { //si cart esta vacío
     //     isAlreadyInCart = false;
@@ -281,22 +295,39 @@ function addToCart(id) {
 // Exercise 9
 function removeFromCart(id) {
     // 1. Loop for to the array products to get the item to delete to cart
-    // 2. Delete one unit of found product from the cart array
+    // 2. Delete one unit of found product from the cart array  
 
-    let alert;
+    let existsInCart;
+    existsInCart = cart.some(item => item.id === id);
 
+    if (!existsInCart) {
+        alert('Este producto no se encuentra en tu carrito.');
+        return;
+    }
+    
+    
     for (let i = 0; i < cart.length; i++) {
+        console.log(existsInCart);
+
         if (id === cart[i].id && cart[i].quantity > 1) {
             cart[i].quantity--;
+            totalProducts();
         } else if (id === cart[i].id && cart[i].quantity == 1 ) {
             cart.splice(i, 1);
-        } else {
-            alert('No tenías este artículo en el carrito.');
+            totalProducts();
         }
     }
 }
 
+function totalProducts() {
+    let countProducts = 0;
+
+    for (let i = 0; i < cart.length; i++) {
+        countProducts += cart[i].quantity;
+    }
+    document.getElementById("countProducts").innerHTML = countProducts;
+}
+
 function open_modal(){
-	console.log("Open Modal");
 	printCart();
 }

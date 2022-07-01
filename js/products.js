@@ -1,7 +1,7 @@
 var products = [
     {
          id: 1,
-         name: 'Lituania',
+         name: 'Lituania Print',
          price: 95,
          type: 'copies',
          offer: {
@@ -11,14 +11,14 @@ var products = [
      },
      {
          id: 2,
-         name: 'Venezia',
+         name: 'Venezia Print',
          price: 175,
          type: 'copies'
  
      },
      {
          id: 3,
-         name: 'Bergamo',
+         name: 'Bergamo Print',
          price: 300,
          type: 'copies',
          offer: {
@@ -46,19 +46,19 @@ var products = [
      },
      {
          id: 7,
-         name: 'Lightroom',
+         name: 'Lightroom Workshop',
          price: 95,
          type: 'courses'
      },
      {
          id: 8,
-         name: 'Photoshop',
+         name: 'Photoshop Workshop',
          price: 95,
          type: 'courses'
      },
      {
          id: 9,
-         name: 'Street Photography',
+         name: 'Street Photography Workshop',
          price: 135,
          type: 'courses'
      }

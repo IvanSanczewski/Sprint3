@@ -11,7 +11,7 @@ var products = [
      },
      {
          id: 2,
-         name: 'Odesa',
+         name: 'Venezia',
          price: 175,
          type: 'copies'
  

@@ -1,69 +1,69 @@
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
-var products = [
-   {
-        id: 1,
-        name: 'Cooking oil',
-        price: 10.5,
-        type: 'grocery',
-        offer: {
-            number: 3,
-            percent: 20
-        }
-    },
-    {
-        id: 2,
-        name: 'Pasta',
-        price: 6.25,
-        type: 'grocery'
+// var products = [
+//    {
+//         id: 1,
+//         name: 'Cooking oil',
+//         price: 10.5,
+//         type: 'grocery',
+//         offer: {
+//             number: 3,
+//             percent: 20
+//         }
+//     },
+//     {
+//         id: 2,
+//         name: 'Pasta',
+//         price: 6.25,
+//         type: 'grocery'
 
-    },
-    {
-        id: 3,
-        name: 'Instant cupcake mixture',
-        price: 5,
-        type: 'grocery',
-        offer: {
-            number: 10,
-            percent: 30
-        }
-    },
-    {
-        id: 4,
-        name: 'All-in-one',
-        price: 260,
-        type: 'beauty'
-    },
-    {
-        id: 5,
-        name: 'Zero Make-up Kit',
-        price: 20.5,
-        type: 'beauty'
-    },
-    {
-        id: 6,
-        name: 'Lip Tints',
-        price: 12.75,
-        type: 'beauty'
-    },
-    {
-        id: 7,
-        name: 'Lawn Dress',
-        price: 15,
-        type: 'clothes'
-    },
-    {
-        id: 8,
-        name: 'Lawn-Chiffon Combo',
-        price: 19.99,
-        type: 'clothes'
-    },
-    {
-        id: 9,
-        name: 'Toddler Frock',
-        price: 9.99,
-        type: 'clothes'
-    }
-]
+//     },
+//     {
+//         id: 3,
+//         name: 'Instant cupcake mixture',
+//         price: 5,
+//         type: 'grocery',
+//         offer: {
+//             number: 10,
+//             percent: 30
+//         }
+//     },
+//     {
+//         id: 4,
+//         name: 'All-in-one',
+//         price: 260,
+//         type: 'beauty'
+//     },
+//     {
+//         id: 5,
+//         name: 'Zero Make-up Kit',
+//         price: 20.5,
+//         type: 'beauty'
+//     },
+//     {
+//         id: 6,
+//         name: 'Lip Tints',
+//         price: 12.75,
+//         type: 'beauty'
+//     },
+//     {
+//         id: 7,
+//         name: 'Lawn Dress',
+//         price: 15,
+//         type: 'clothes'
+//     },
+//     {
+//         id: 8,
+//         name: 'Lawn-Chiffon Combo',
+//         price: 19.99,
+//         type: 'clothes'
+//     },
+//     {
+//         id: 9,
+//         name: 'Toddler Frock',
+//         price: 9.99,
+//         type: 'clothes'
+//     }
+// ]
 // Array with products (objects) added directly with push(). Products in this array are repeated.
 var cartList = [];
 
@@ -93,7 +93,9 @@ function buy(id) {
     //     }
     // }
     // generateCart(cartList);
-    addToCart(id)
+
+
+    addToCart(id);
 }
 
 
@@ -119,7 +121,6 @@ function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
         
     for (i= 0; i < cart.length; i++){
- 
         if (cart[i].id === 1 && cart[i].quantity >= cart[i].offer['number']) {
             total += cart[i].subtotalWithDiscount;
         } else if (cart[i].id === 3 && cart[i].quantity >= cart[i].offer['number']) {
@@ -128,7 +129,6 @@ function calculateTotal() {
             total += cart[i].price * cart[i].quantity;
         }
     }
-    
     document.getElementById("totalPrice").innerHTML = total.toFixed(2);
     total = 0;
 }
@@ -139,7 +139,6 @@ function generateCart(cartList) {
 // Using the "cartlist" array that contains all the items in the shopping cart, 
 // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
 
-    //inicializamos variables
     let i, k;
     let isAlreadyInCart;
 
@@ -148,29 +147,23 @@ function generateCart(cartList) {
     for (i = ((cartList.length) - 1); i < cartList.length; i++) {
 
         if (cart.length === 0){
-            // cartList[i].quantity = 1;
             cart.push(cartList[i]);
             cart[0].quantity = 1; // podríamos añadir parámetro y valor al objeto del segundo array una vez hecho el push
-
         } else {
-            
             isAlreadyInCart = false;
             // loop al segundo array
             for (k = 0; k < cart.length; k++) {
-                
                 if (cartList[i].id === cart[k].id){
                     cart[k].quantity ++;
                     isAlreadyInCart = true;
                 }
             }
-
             if (!isAlreadyInCart){
                 cartList[i].quantity = 1;
                 cart.push(cartList[i])
             }
         }
     }
-    // applyPromotionsCart(cart); //debería pedirlo calculateTotal()
 }
 
 // Exercise 5
@@ -234,13 +227,11 @@ function addToCart(id) {
     // 2. Add found product to the cart array or update its quantity in case it has been added previously
     let i;
 
-
-    // let countProducts = 0; comentamos para que una función externa realice el recuento de productos y así modularizar
+    // let countProducts = 0; comentamos para que una función totalProducts() realice el recuento de productos y así modularizamos
     let isAlreadyInCart = false; 
     
     if (cart.length === 0) { //si cart esta vacío
         isAlreadyInCart = false;
-
     } else {
         for (i = 0; i < cart.length; i++){ //comparar el id del objeto del array products con el id de los objetos que ya están en cart
             if (id === cart[i].id) {
@@ -251,24 +242,18 @@ function addToCart(id) {
             }
         }        
     }    
+
     if (isAlreadyInCart) {
         cart[i].quantity++;
     } else {
         products[id-1].quantity = 1; //añadir propiedad quantity al objeto
         cart.push(products[id-1]); //añadir objeto del array products al array al cart
     }
-
-    // ********    
-    // sacamos el contador total de productos a una función externa y la llamamos cada vez que se hace click en añadir o eliminar
-    totalProducts();
-    // for (let k = 0; k < cart.length; k++) {
-    //     countProducts += cart[k].quantity;
-    //     document.getElementById("countProducts").innerHTML = countProducts;
-    // }
-    // countProducts = 0;
+    
 
     // ********     
     // hacer el ciclo mediante un forEach()
+    // ********     
 
 
     // if (cart.length === 0) { //si cart esta vacío
@@ -276,7 +261,7 @@ function addToCart(id) {
     
     // } else {
     //     cart.forEach(item => { //para cada item del cart
-    //         if (id == item.id) { //find: ya está el id
+    //         if (id === item.id) { //find: ya está el id
     //             isAlreadyInCart = true;
     //             break;
     //         } else {
@@ -285,11 +270,17 @@ function addToCart(id) {
     //     })
     // }
     // if (isAlreadyInCart) {
-    //     cart[i].quantity++;
+    //     item.quantity++;
     // } else {
     //     products[id-1].quantity = 1; //añadir propiedad quantity al objeto
     //     cart.push(products[id-1]); //añadir objeto del array products al array al cart
     // }
+
+    // ********     
+    // ********     
+
+    totalProducts(); // sacamos el contador total de productos a una función externa y la llamamos cada vez que se hace click en añadir o eliminar
+    
 }
 
 // Exercise 9
@@ -305,10 +296,7 @@ function removeFromCart(id) {
         return;
     }
     
-    
     for (let i = 0; i < cart.length; i++) {
-        console.log(existsInCart);
-
         if (id === cart[i].id && cart[i].quantity > 1) {
             cart[i].quantity--;
             totalProducts();
@@ -321,7 +309,6 @@ function removeFromCart(id) {
 
 function totalProducts() {
     let countProducts = 0;
-
     for (let i = 0; i < cart.length; i++) {
         countProducts += cart[i].quantity;
     }
